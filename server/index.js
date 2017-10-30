@@ -4,7 +4,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 // const db = require('./db');
 
-const PORT = process.env.PORT || 8888; 
+const PORT = process.env.PORT || 8888;
 
 const app = express();
 
@@ -23,23 +23,23 @@ app.use(express.static(path.join(__dirname, '..', 'node_modules')));
 app.use(express.static(path.join(__dirname, '..', 'public')))
 
 
-//body parser middleware 
+//body parser middleware
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}))
 
-// API routes 
+// API routes
 
 // app.use('/api', require('./api'));
 
 //404 middleware
 app.use((req,res,next) => {
-	path.extname(req.path).length > 0 ? 
+	path.extname(req.path).length > 0 ?
 	res.status(404).send('Not found') : next()
 })
 
 app.use('*', (req,res,next) => res.sendFile(path.join(__dirname, '..', 'public/index.html'))
 	);
 
-//error handling endware 
+//error handling endware
 app.use((err,req,res,next) => res.status(err.status || 500).send(err.message || 'Internal sercer error :(')
 	);
